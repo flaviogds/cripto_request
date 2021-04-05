@@ -1,15 +1,15 @@
-import { Coin, CoinList, Global, Quote } from '../../entity/entity'
+import { Coin, CoinList, Global, Quote } from '../entity/entity';
 
 export function coinList(response: any): CoinList{
 
     return {
-        status: 
+        status:
         {
             timestamp: response.status.timestamp,
             total_count: response.status.total_count
         },
         data: response.data.map((entity: any) => makeCoin(entity))
-    }
+    };
 }
 
 export function detailCoin(response: any, id: string): Coin{
@@ -18,13 +18,13 @@ export function detailCoin(response: any, id: string): Coin{
         name: response.data[id].name,
         symbol: response.data[id].symbol,
         category: response.data[id].category,
-        description: response.data[id].description, 
+        description: response.data[id].description,
         slug: response.data[id].slug,
         logo: response.data[id].log,
         subreddit: response.data[id].subreddit,
         tags: response.data[id].tags,
-        tag_names: response.data[id]["tag-names"],
-        tag_groups: response.data[id]["tag-groups"],
+        tag_names: response.data[id]['tag-names'],
+        tag_groups: response.data[id]['tag-groups'],
         platform: response.data[id].platform,
         date_added: response.data[id].date_added,
         num_market_pairs: undefined,
@@ -42,11 +42,11 @@ export function detailCoin(response: any, id: string): Coin{
             technical_doc: response.data[id].urls.technical_doc,
             source_code: response.data[id].urls.source_code
         }
-    }
+    };
 }
 
 export function quoteCoin(response: any, id: string): Coin{
-    return makeCoin(response.data[id])
+    return makeCoin(response.data[id]);
 }
 
 /* export function globalMetric(response: any): Global{
@@ -71,7 +71,7 @@ export function quoteCoin(response: any, id: string): Coin{
         derivatives_volume_24h: response.data.derivatives_volume_24h,
         derivatives_volume_24h_reported: response.data.derivatives_volume_24h_reported,
         derivatives_24h_percentage_change: response.data.derivatives_24h_percentage_change,
-        quote: 
+        quote:
         {
             currency: response.data.quote[key],
             total_market_cap: response.data.quote[key].total_market_cap,
@@ -87,13 +87,13 @@ export function quoteCoin(response: any, id: string): Coin{
 } */
 
 
-function makeCoin(entity: any): Coin{   
+function makeCoin(entity: any): Coin{
     return {
         id: entity.id,
         name: entity.name,
         symbol: entity.symbol,
         category: undefined,
-        description: undefined, 
+        description: undefined,
         slug: entity.slug,
         logo: undefined,
         subreddit: undefined,
@@ -109,14 +109,14 @@ function makeCoin(entity: any): Coin{
         cmc_rank: entity.cmc_rank,
         last_updated: entity.last_updated,
         quote: makeQuote(entity.quote),
-        urls: undefined  
-    }
+        urls: undefined,
+    };
 }
 
 function makeQuote(quote: any){
     const key = Object.keys(quote).pop()?.toString();
 
-    if(key !== undefined){
+    if (key !== undefined){
         return {
             currency: key,
             price: quote[key].price,
@@ -127,7 +127,7 @@ function makeQuote(quote: any){
             percent_change_30d: quote[key].percent_change_30d,
             market_cap: quote[key].market_cap,
             last_updated: quote[key].last_updated
-        }
+        };
     }else{
         return undefined;
     }

@@ -12,10 +12,8 @@ import { detailCoin, coinList, quoteCoin } from 'src/app/utils/utils';
   providedIn: 'root'
 })
 export class ServiceCoin{
-  
-  constructor(private http: HttpClient) {
 
-  }
+  constructor(private http: HttpClient) {  }
 
   getAllCoin(start: string, limit: string, convert: string): Observable<CoinList>{
     const params = new HttpParams( { fromObject: { CMC_PRO_API_KEY: environment.API_KEY, start, limit, convert } } );
@@ -38,8 +36,8 @@ export class ServiceCoin{
       .pipe(map((response: any) => quoteCoin(response, id)));
   }
 
-/*
-   getGlobalMetrics(): Global{
+  /*
+  getGlobalMetrics(): Global{
     const params = new HttpParams( { fromObject: { CMC_PRO_API_KEY: environment.API_KEY } } );
 
     return this.request<any>('global-metrics/quotes/latest', params)
