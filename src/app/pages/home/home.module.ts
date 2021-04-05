@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomePage } from './components/home.page';
 import { RouterModule } from '@angular/router';
+
+import { HomePage } from './components/home.page';
 import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { homeReducer } from './state/home.reducer';
-import { HomeEffects } from './state/home.effects';
+import { featureKey, featureReducer, reducers } from './components/ngrx';
 
 
 
@@ -14,8 +13,7 @@ import { HomeEffects } from './state/home.effects';
   imports: [
     CommonModule,
     RouterModule,
-    StoreModule.forFeature('home', homeReducer),
-    EffectsModule.forFeature([HomeEffects]),
+    StoreModule.forFeature(featureKey, reducers),
   ]
 })
 export class HomeModule { }
