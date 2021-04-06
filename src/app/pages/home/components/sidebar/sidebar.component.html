@@ -1,0 +1,12 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+        <p>Input Form Query Parameters</p>
+    </mat-drawer>
+
+    <button type="button" mat-button (click)="drawer.toggle()" (click)="buttonToggle()">
+        <span class="material-icons">menu</span>
+        <span *ngIf="showFiller" class="material-icons">chevron_right</span>
+        <span *ngIf="!showFiller" class="material-icons">chevron_left</span>
+    </button>
+</mat-drawer-container>
+

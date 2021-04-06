@@ -8,6 +8,7 @@ import { Coin } from 'src/app/entity/entity';
 })
 export class ListComponent {
 
-  @Input() data: any | undefined;
+  @Input() dataSource: any | undefined;
 
+  displayedColumns: string[] = ['id', 'name', 'description'];
 }

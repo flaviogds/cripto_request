@@ -1,0 +1,12 @@
+.example-container {
+  display: flex;
+  background-color: cadetblue;
+  height: 100%;
+  margin: auto;
+}
+
+.example-sidenav {
+  padding: 20px;
+  width: 200px;
+  height: 100%;
+}

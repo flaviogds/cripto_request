@@ -6,6 +6,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { ServiceCoin } from 'src/app/services/coins.service';
 import * as homeAction from '../state/home.actions';
+import { Coin, CoinList, Quote } from 'src/app/entity/entity';
 
 
 @Injectable()
@@ -27,7 +28,7 @@ export class CoinEffects{
                     this.store.dispatch(homeAction.requisitionFailed());
                     return caught$;
                 }),
-                map((response: any) => homeAction.requisitionConcluded({ response })),
+                map((response: CoinList) => homeAction.requisitionConcluded({ response })),
             ),
     );
     loadCoinById$ = createEffect(
@@ -40,7 +41,7 @@ export class CoinEffects{
                     this.store.dispatch(homeAction.requisitionFailed());
                     return caught$;
                 }),
-                map((response: any) => homeAction.requisitionConcluded({ response })),
+                map((response: Coin) => homeAction.requisitionConcluded({ response })),
             ),
     );
 
@@ -54,7 +55,7 @@ export class CoinEffects{
                     this.store.dispatch(homeAction.requisitionFailed());
                     return caught$;
                 }),
-                map((response: any) => homeAction.requisitionConcluded({ response })),
+                map((response: Coin) => homeAction.requisitionConcluded({ response })),
             ),
     );
 }
