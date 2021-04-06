@@ -8,27 +8,23 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './components/app.component';
-import { HomePage } from './pages/home/components/home.page';
 
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AppComponent } from './app.component';
+
+import { HomeModule } from './pages/home/home.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomePage,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HomeModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: false,
-    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

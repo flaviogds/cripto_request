@@ -1,0 +1,14 @@
+<table>
+    <th>
+        <tr>
+            <td>ID</td>
+            <td>Nome</td>
+            <td>Descrição</td>
+        </tr>
+    </th>
+    <tr *ngFor="let coin of data">
+        <td>{{ coin.id }}</td>
+        <td>{{ coin.name }}</td>
+        <td>{{ coin.description }}</td>
+    </tr>
+</table>
