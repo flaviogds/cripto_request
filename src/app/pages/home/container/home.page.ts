@@ -1,14 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { select, Store } from '@ngrx/store';
 
-import { selectFailed, selectFeature, selectLoading, selectResponse } from '../state/home.selectors';
-import { clearState, loadCoinById, loadListOfCoins } from '../state/home.actions';
-
-import { Coin, CoinList } from 'src/app/entity/entity';
+import * as homeSelectors from '../state/home.selectors';
+import * as homeActions from '../state/home.actions';
 
 @Component({
   selector: 'crip-home',
@@ -20,8 +17,6 @@ export class HomePage implements OnInit, OnDestroy {
   private componentDestroyed$ = new Subject();
 
   response$: Observable<any> | undefined;
-  responseData: any | undefined;
-
   loading$: Observable<boolean> | undefined;
   failed$: Observable<boolean> | undefined;
 
@@ -29,13 +24,9 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.response$ = this.store.pipe(select(selectResponse));
-    this.loading$ = this.store.pipe(select(selectLoading));
-    this.failed$ = this.store.pipe(select(selectFailed));
-
-    this.response$
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(response => this.responseData = [...response]);
+    this.response$ = this.store.pipe(select(homeSelectors.selectResponse));
+    this.loading$ = this.store.pipe(select(homeSelectors.selectLoading));
+    this.failed$ = this.store.pipe(select(homeSelectors.selectFailed));
 
     this.go();
   }
@@ -43,12 +34,12 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.componentDestroyed$.next();
     this.componentDestroyed$.unsubscribe();
-    this.store.dispatch(clearState());
+    this.store.dispatch(homeActions.clearState());
   }
 
   go(): void{
     this.store.dispatch(
-      loadListOfCoins({ start: '1', limit: '50', convert: 'USD' })
+      homeActions.loadListOfCoins({ start: '1', limit: '50', convert: 'USD' })
     );
   }
 }

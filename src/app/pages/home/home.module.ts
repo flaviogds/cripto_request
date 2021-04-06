@@ -6,13 +6,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 
 import { HomePage } from './container/home.page';
-
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { featureKey } from './state/home.selectors';
 import { reducers } from './state/home.reducer';
@@ -32,8 +31,8 @@ import { ProgressbarComponent } from './components/progressbar/progressbar.compo
   imports: [
     CommonModule,
     RouterModule,
-    FlexLayoutModule,
     MatTableModule,
+    MatFormFieldModule,
     MatProgressBarModule,
     MatSidenavModule,
     MatButtonModule,

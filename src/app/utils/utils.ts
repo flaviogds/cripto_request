@@ -45,6 +45,53 @@ export function detailCoin(response: any, id: string): Coin{
     };
 }
 
+function makeCoin(entity: any): Coin{
+    return {
+        id: entity.id,
+        name: entity.name,
+        symbol: entity.symbol,
+        category: undefined,
+        description: undefined,
+        slug: entity.slug,
+        logo: undefined,
+        subreddit: undefined,
+        tags: entity.tags,
+        tag_names:  undefined,
+        tag_groups: undefined,
+        platform: entity.platform,
+        date_added: entity.date_added,
+        num_market_pairs: entity.num_market_pairs,
+        max_supply: entity.max_supply,
+        circulating_supply: entity.circulating_supply,
+        total_supply: entity.total_supply,
+        cmc_rank: entity.cmc_rank,
+        last_updated: entity.last_updated,
+        quote: makeQuote(entity.quote),
+        urls: undefined,
+    };
+}
+
+function makeQuote(quote: any): any {
+    const key = Object.keys(quote).pop()?.toString();
+
+    if (key !== undefined){
+        return {
+            currency: key,
+            price: quote[key].price,
+            volume_24h: quote[key].volume_24h,
+            percent_change_1h: quote[key].percent_change_1h,
+            percent_change_24h: quote[key].percent_change_24h,
+            percent_change_7d: quote[key].percent_change_7d,
+            percent_change_30d: quote[key].percent_change_30d,
+            market_cap: quote[key].market_cap,
+            last_updated: quote[key].last_updated
+        };
+    }else{
+        return undefined;
+    }
+}
+
+
 export function quoteCoin(response: any, id: string): Coin{
     return makeCoin(response.data[id]);
 }
@@ -85,50 +132,3 @@ export function quoteCoin(response: any, id: string): Coin{
         last_updated: response.data.last_updated
     }
 } */
-
-
-function makeCoin(entity: any): Coin{
-    return {
-        id: entity.id,
-        name: entity.name,
-        symbol: entity.symbol,
-        category: undefined,
-        description: undefined,
-        slug: entity.slug,
-        logo: undefined,
-        subreddit: undefined,
-        tags: entity.tags,
-        tag_names:  undefined,
-        tag_groups: undefined,
-        platform: entity.platform,
-        date_added: entity.date_added,
-        num_market_pairs: entity.num_market_pairs,
-        max_supply: entity.max_supply,
-        circulating_supply: entity.circulating_supply,
-        total_supply: entity.total_supply,
-        cmc_rank: entity.cmc_rank,
-        last_updated: entity.last_updated,
-        quote: makeQuote(entity.quote),
-        urls: undefined,
-    };
-}
-
-function makeQuote(quote: any){
-    const key = Object.keys(quote).pop()?.toString();
-
-    if (key !== undefined){
-        return {
-            currency: key,
-            price: quote[key].price,
-            volume_24h: quote[key].volume_24h,
-            percent_change_1h: quote[key].percent_change_1h,
-            percent_change_24h: quote[key].percent_change_24h,
-            percent_change_7d: quote[key].percent_change_7d,
-            percent_change_30d: quote[key].percent_change_30d,
-            market_cap: quote[key].market_cap,
-            last_updated: quote[key].last_updated
-        };
-    }else{
-        return undefined;
-    }
-}

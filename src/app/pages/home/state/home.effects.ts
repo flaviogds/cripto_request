@@ -5,9 +5,8 @@ import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { ServiceCoin } from 'src/app/services/coins.service';
+import { Coin, CoinList } from 'src/app/entity/entity';
 import * as homeAction from '../state/home.actions';
-import { Coin, CoinList, Quote } from 'src/app/entity/entity';
-
 
 @Injectable()
 export class CoinEffects{

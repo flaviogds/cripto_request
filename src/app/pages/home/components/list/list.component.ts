@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Coin } from 'src/app/entity/entity';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'crip-list',
@@ -8,7 +8,13 @@ import { Coin } from 'src/app/entity/entity';
 })
 export class ListComponent {
 
-  @Input() dataSource: any | undefined;
+  @Input() data: any | undefined;
 
+  dataSource = new MatTableDataSource(this.data);
   displayedColumns: string[] = ['id', 'name', 'description'];
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }

@@ -7,7 +7,6 @@ export const featureKey = 'home';
 
 export const selectFeature = createFeatureSelector<StateModel>(featureKey);
 
-
 export const selectResponse = createSelector(
     selectFeature,
     (state: StateModel) => state.response,

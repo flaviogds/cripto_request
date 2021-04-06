@@ -10,8 +10,7 @@ export class SidebarComponent {
 
   showFiller = false;
 
-  buttonToggle(){
+  buttonToggle() {
     this.showFiller = !this.showFiller;
   }
-
 }

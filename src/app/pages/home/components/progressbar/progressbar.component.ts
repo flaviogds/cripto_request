@@ -9,9 +9,8 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 })
 export class ProgressbarComponent {
 
-  color: ThemePalette = 'primary';
-  mode: ProgressBarMode = 'determinate';
-  value = 50;
-  bufferValue = 75;
-
+  color: ThemePalette = 'dark';
+  mode: ProgressBarMode = 'query';
+  value = 10;
+  bufferValue = 10;
 }

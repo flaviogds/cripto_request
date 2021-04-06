@@ -1,10 +1,3 @@
-
 <div class="container">
-    <crip-sidebar></crip-sidebar>
-    <div fxFlex="100" fxFlex.xs="10">
-        
-        <crip-list [dataSource]="responseData"></crip-list>
-
-        <crip-progressbar *ngIf="!(loading$ | async)"></crip-progressbar>
-    </div>
+    <crip-list [data]="(response$ | async).data"></crip-list>
 </div>
