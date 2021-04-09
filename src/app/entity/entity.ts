@@ -3,6 +3,7 @@ export interface CoinList {
     {
         timestamp: string,
         total_count: number
+        currency: string
     };
     data: Coin[];
 }
@@ -42,10 +43,26 @@ export interface Quote {
     currency: string;
     price: number;
     volume_24h: number;
-    percent_change_1h: number;
-    percent_change_24h: number;
-    percent_change_7d: number;
-    percent_change_30d: number;
+    changes_1h:
+    {
+        value: number;
+        rateUp: boolean;
+    };
+    changes_24h:
+    {
+        value: number;
+        rateUp: boolean;
+    };
+    changes_7d:
+    {
+        value: number;
+        rateUp: boolean;
+    };
+    changes_30d:
+    {
+        value: number;
+        rateUp: boolean;
+    };
     market_cap: number;
     last_updated: string;
 }

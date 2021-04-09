@@ -1,12 +1,15 @@
-import { Coin, CoinList, Global, Quote } from '../entity/entity';
+import { Observable } from 'rxjs';
+import { Currency } from '../entity/currency';
+import { Coin, CoinList } from '../entity/entity';
 
-export function coinList(response: any): CoinList{
+export function coinList(response: any, convert: string): CoinList{
 
     return {
         status:
         {
             timestamp: response.status.timestamp,
-            total_count: response.status.total_count
+            total_count: response.status.total_count,
+            currency: convert
         },
         data: response.data.map((entity: any) => makeCoin(entity))
     };
@@ -79,10 +82,24 @@ function makeQuote(quote: any): any {
             currency: key,
             price: quote[key].price,
             volume_24h: quote[key].volume_24h,
-            percent_change_1h: quote[key].percent_change_1h,
-            percent_change_24h: quote[key].percent_change_24h,
-            percent_change_7d: quote[key].percent_change_7d,
-            percent_change_30d: quote[key].percent_change_30d,
+            changes_1h:
+            {
+                value: quote[key].percent_change_1h,
+                rateUp: trend(quote[key].percent_change_1h)
+            },
+            changes_24h:
+            {
+                value: quote[key].percent_change_24h,
+                rateUp: trend(quote[key].percent_change_24h)
+            },
+            changes_7d: {
+                value: quote[key].percent_change_7d,
+                rateUp: trend(quote[key].percent_change_7d)
+            },
+            changes_30d: {
+                value: quote[key].percent_change_30d,
+                rateUp: trend(quote[key].percent_change_30d)
+            },
             market_cap: quote[key].market_cap,
             last_updated: quote[key].last_updated
         };
@@ -91,44 +108,61 @@ function makeQuote(quote: any): any {
     }
 }
 
-
 export function quoteCoin(response: any, id: string): Coin{
     return makeCoin(response.data[id]);
 }
 
-/* export function globalMetric(response: any): Global{
+export function globalMetric(response: any): any{
     const key = Object.keys(response.data.quote).pop()?.toString();
 
-    return {
-        active_cryptocurrencies: response.data.active_cryptocurrencies,
-        total_cryptocurrencies: response.data.total_cryptocurrencies,
-        active_market_pairs: response.data.active_market_pairs,
-        active_exchanges: response.data.active_exchanges,
-        total_exchanges: response.data.total_exchanges,
-        eth_dominance: response.data.eth_dominance,
-        btc_dominance: response.data.btc_dominance,
-        defi_volume_24h:response.data.defi_volume_24h,
-        defi_volume_24h_reported: response.data.defi_volume_24h_reported,
-        defi_market_cap: response.data.defi_market_cap,
-        defi_24h_percentage_change: response.data.defi_24h_percentage_change,
-        stablecoin_volume_24h: response.data.stablecoin_volume_24h,
-        stablecoin_volume_24h_reported: response.data.stablecoin_volume_24h_reported,
-        stablecoin_market_cap: response.data.stablecoin_market_cap,
-        stablecoin_24h_percentage_change: response.data.stablecoin_24h_percentage_change,
-        derivatives_volume_24h: response.data.derivatives_volume_24h,
-        derivatives_volume_24h_reported: response.data.derivatives_volume_24h_reported,
-        derivatives_24h_percentage_change: response.data.derivatives_24h_percentage_change,
-        quote:
-        {
-            currency: response.data.quote[key],
-            total_market_cap: response.data.quote[key].total_market_cap,
-            total_volume_24h: response.data.quote[key].total_volume_24h,
-            total_volume_24h_reported: response.data.quote[key].total_volume_24h_reported,
-            altcoin_volume_24h: response.data.quote[key].altcoin_volume_24h,
-            altcoin_volume_24h_reported: response.data.quote[key].altcoin_volume_24h_reported,
-            altcoin_market_cap: response.data.quote[key].altcoin_market_cap,
-            last_updated: response.data.quote[key].last_updated
-        },
-        last_updated: response.data.last_updated
+    if (key !== undefined){
+        return {
+            active_cryptocurrencies: response.data.active_cryptocurrencies,
+            total_cryptocurrencies: response.data.total_cryptocurrencies,
+            active_market_pairs: response.data.active_market_pairs,
+            active_exchanges: response.data.active_exchanges,
+            total_exchanges: response.data.total_exchanges,
+            eth_dominance: response.data.eth_dominance,
+            btc_dominance: response.data.btc_dominance,
+            defi_volume_24h: response.data.defi_volume_24h,
+            defi_volume_24h_reported: response.data.defi_volume_24h_reported,
+            defi_market_cap: response.data.defi_market_cap,
+            defi_24h_percentage_change: response.data.defi_24h_percentage_change,
+            stablecoin_volume_24h: response.data.stablecoin_volume_24h,
+            stablecoin_volume_24h_reported: response.data.stablecoin_volume_24h_reported,
+            stablecoin_market_cap: response.data.stablecoin_market_cap,
+            stablecoin_24h_percentage_change: response.data.stablecoin_24h_percentage_change,
+            derivatives_volume_24h: response.data.derivatives_volume_24h,
+            derivatives_volume_24h_reported: response.data.derivatives_volume_24h_reported,
+            derivatives_24h_percentage_change: response.data.derivatives_24h_percentage_change,
+            quote:
+            {
+                currency: response.data.quote[key],
+                total_market_cap: response.data.quote[key].total_market_cap,
+                total_volume_24h: response.data.quote[key].total_volume_24h,
+                total_volume_24h_reported: response.data.quote[key].total_volume_24h_reported,
+                altcoin_volume_24h: response.data.quote[key].altcoin_volume_24h,
+                altcoin_volume_24h_reported: response.data.quote[key].altcoin_volume_24h_reported,
+                altcoin_market_cap: response.data.quote[key].altcoin_market_cap,
+                last_updated: response.data.quote[key].last_updated
+            },
+            last_updated: response.data.last_updated
+        };
+    }else{
+        return undefined;
     }
-} */
+}
+
+function trend(value: number): boolean{
+    return (value / Math.abs(value)) !== -1;
+}
+
+export function makeCurrency( data: any | Observable<any> ): Currency[] {
+    return data.map((curr: any) => ({
+        id: curr.id,
+        name: curr.name,
+        currency: curr.currency,
+        code: curr.code,
+        symbol: curr.symbol
+    }));
+}

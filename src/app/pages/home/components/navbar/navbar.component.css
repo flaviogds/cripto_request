@@ -1,0 +1,29 @@
+.nav-container{
+    height: calc(100% - 4rem);
+    background-color: #00000000;
+}
+
+.nav-content{
+    padding: 2.5rem;
+    min-width: 10rem;
+    box-sizing: border-box;
+    border: none;
+    background-color: #00000054;
+}
+
+.nav-navtitle{
+    padding: 1rem;
+}
+     
+.nav-navtoggle {
+    width: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #00000054;
+}
+
+.nav-navtoggle:hover{
+    background-color: #0000002f;
+}

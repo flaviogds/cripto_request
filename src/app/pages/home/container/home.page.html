@@ -1,3 +1,13 @@
 <div class="container">
-    <crip-list [data]="(response$ | async).data"></crip-list>
+    <div class="nav">
+        <crip-navbar>
+            <crip-form></crip-form>
+        </crip-navbar>
+    </div>
+
+    <div class="content">
+        <mat-spinner *ngIf="(loading$ | async)" color="accent" class="loading"></mat-spinner>
+
+        <crip-table *ngIf="!(loading$ | async)"></crip-table>
+    </div>
 </div>

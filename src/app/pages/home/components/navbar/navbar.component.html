@@ -1,0 +1,21 @@
+<ng-container>
+
+  <mat-toolbar>
+    <mat-icon> request_quote </mat-icon>
+    <span *ngIf="opened" class="nav-navtitle"> CRIPTO </span>
+  </mat-toolbar>
+
+  <mat-drawer-container class="nav-container">
+    <mat-drawer #drawer mode="side" class="nav-content">
+      <ng-content></ng-content>
+    </mat-drawer>
+
+    <mat-drawer-content (click)="[drawer.toggle(), toggle()]" class="nav-navtoggle">
+      <button mat-icon-button >
+        <mat-icon class="material-icons"  color="accent">
+          {{ !opened ? 'menu' : 'close'}}
+        </mat-icon>
+      </button>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</ng-container>

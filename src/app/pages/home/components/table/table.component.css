@@ -1,0 +1,22 @@
+.table-container {
+  text-align: justify;
+}
+
+th {
+  text-align: center;
+  padding-left: 5rem;
+}
+
+td {
+  width: fit-content;
+  max-width: 20rem;
+}
+
+.table {
+  width: 100%;
+}
+
+.img-small {
+  width: 1.5rem;
+  margin-right: 1rem;
+}

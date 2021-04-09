@@ -10,7 +10,7 @@ export interface StateModel{
 
 export const initialState: StateModel = {
     response:  {},
-    loading: true,
+    loading: false,
     failed: false,
 };
 

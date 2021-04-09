@@ -5,39 +5,33 @@ import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatButtonModule } from '@angular/material/button';
-
 import { HomePage } from './container/home.page';
 
 import { featureKey } from './state/home.selectors';
 import { reducers } from './state/home.reducer';
 import { CoinEffects } from './state/home.effects';
 
-import { ListComponent } from './components/list/list.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { ProgressbarComponent } from './components/progressbar/progressbar.component';
+import { MaterialModule } from '../../material/material.module';
+
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FormComponent } from './components/form/form.component';
+import { TableComponent } from './components/table/table.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
     HomePage,
-    ListComponent,
-    SidebarComponent,
-    ProgressbarComponent
+    NavbarComponent,
+    FormComponent,
+    TableComponent,
+    DialogComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatProgressBarModule,
-    MatSidenavModule,
-    MatButtonModule,
+    MaterialModule,
     StoreModule.forFeature(featureKey, reducers),
     EffectsModule.forFeature([CoinEffects]),
   ]
 })
-export class HomeModule { }
+export class HomeModule {}

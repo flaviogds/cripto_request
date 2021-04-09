@@ -19,11 +19,13 @@ export class HomePage implements OnInit, OnDestroy {
   response$: Observable<any> | undefined;
   loading$: Observable<boolean> | undefined;
   failed$: Observable<boolean> | undefined;
+  data: any;
+
+  start: boolean | undefined;
 
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-
     this.response$ = this.store.pipe(select(homeSelectors.selectResponse));
     this.loading$ = this.store.pipe(select(homeSelectors.selectLoading));
     this.failed$ = this.store.pipe(select(homeSelectors.selectFailed));
@@ -39,7 +41,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   go(): void{
     this.store.dispatch(
-      homeActions.loadListOfCoins({ start: '1', limit: '50', convert: 'USD' })
+      homeActions.loadListOfCoins({ start: '1', limit: '100', convert: 'USD' })
     );
   }
 }
