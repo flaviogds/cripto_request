@@ -1,13 +1,38 @@
 <div class="container">
     <div class="nav">
         <crip-navbar>
-            <crip-form></crip-form>
+            <crip-form
+                *ngIf="!(loading$ | async)"
+                [locales$]="(locales$ | async)['locales']"
+                [currency$]="currency$"
+                (newCurrency)="currency($event)">
+            </crip-form>
         </crip-navbar>
     </div>
 
     <div class="content">
-        <mat-spinner *ngIf="(loading$ | async)" color="accent" class="loading"></mat-spinner>
+        <div class="header">
+            <mat-toolbar class="toolbar">
+                <button mat-fab>
+                    <mat-icon> home </mat-icon>
+                </button>
+            </mat-toolbar>
+        </div>
 
-        <crip-table *ngIf="!(loading$ | async)"></crip-table>
+        <ng-container>
+            <mat-spinner
+                *ngIf="(loading$ | async)"
+                class="loading"
+                color="accent">
+            </mat-spinner>
+        </ng-container>
+
+        <ng-container>
+            <crip-table
+                *ngIf="!(loading$ | async)"
+                [data$]="response$"
+                (detailsId)="details($event)">
+            </crip-table>
+        </ng-container>
     </div>
 </div>

@@ -11,6 +11,19 @@ export interface Coin {
     id: number;
     name: string;
     symbol: string;
+    num_market_pairs: number | undefined;
+    max_supply: number | undefined;
+    circulating_supply: number | undefined;
+    total_supply: number | undefined;
+    cmc_rank: number | undefined;
+    last_updated: string | undefined;
+    details: Details | undefined;
+    quote: Quote | undefined;
+
+}
+
+export interface Details {
+    id: number;
     category: string | undefined;
     description: string | undefined;
     slug: string;
@@ -21,13 +34,6 @@ export interface Coin {
     tag_groups: string[] | undefined;
     platform: string;
     date_added: string;
-    num_market_pairs: number | undefined;
-    max_supply: number | undefined;
-    circulating_supply: number | undefined;
-    total_supply: number | undefined;
-    cmc_rank: number | undefined;
-    last_updated: string | undefined;
-    quote: Quote | undefined;
     urls:
     {
         website: string[],

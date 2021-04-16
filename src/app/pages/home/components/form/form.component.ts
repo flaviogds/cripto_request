@@ -1,17 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
-import { Currency } from '../../../../entity/currency'
-
-const test = [
-  { id: "2783", name: "Real", currency: "Brazilian",code: "BRL", symbol: "R$" },
-  { id: "2821", name: "Peso", currency: "Argentine", code: "ARS", symbol: "$" },
-  { id: "2781", name: "Dollar", currency: "United States", code: "USD", symbol: "$" },
-  { id: "2790", name: "Euro", currency: "Europe", code: "EUR", symbol: "€" }
-];
-
+import { Currency } from '../../../../entity/currency';
 
 @Component({
   selector: 'crip-form',
@@ -20,27 +12,44 @@ const test = [
 })
 export class FormComponent implements OnInit {
 
-  myControl = new FormControl();
-  options: Currency[] = test;
+  @Input()
+  locales$: Observable<Currency[]> | undefined;
 
-  filteredOptions: Observable<Currency[]> | undefined;
+  @Input()
+  currency$: Observable<Currency> | undefined;
+
+  @Output()
+  newCurrency = new EventEmitter<string>();
+
+  myControl = new FormControl();
+  options: string[] = [];
+  filteredOptions: Observable<string[]> | undefined;
+
 
   ngOnInit(): void {
+    this.locales$?.subscribe(locale => {
+      this.options = locale.map(curr => curr.locale.concat(' (', curr.symbol, ')'));
+    });
+
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
-        map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.options.slice())
+        map(value => this._filter(value))
       );
   }
 
-  displayFn(user: Currency): string {
-    return user && user.name ? user.name : '';
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  private _filter(name: string): Currency[] {
-    const filterValue = name.toLowerCase();
-    return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+  currencyChanges(): void{
+    this.newCurrency.emit('2781');
+  }
+
+  placeholder(currency: any): string{
+    return currency.locale.concat(' (', currency.symbol, ')');
   }
 
 }

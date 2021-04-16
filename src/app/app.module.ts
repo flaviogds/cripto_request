@@ -26,6 +26,6 @@ import { HomeModule } from './pages/home/home.module';
     EffectsModule.forRoot([]),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

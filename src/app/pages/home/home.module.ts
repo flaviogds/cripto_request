@@ -5,18 +5,19 @@ import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { HomePage } from './container/home.page';
+import { MaterialModule } from '../../material/material.module';
 
 import { featureKey } from './state/home.selectors';
 import { reducers } from './state/home.reducer';
 import { CoinEffects } from './state/home.effects';
 
-import { MaterialModule } from '../../material/material.module';
+import { HomePage } from './container/home.page';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormComponent } from './components/form/form.component';
 import { TableComponent } from './components/table/table.component';
-import { DialogComponent } from './dialog/dialog.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { CardModalComponent } from './components/card-modal/card-modal.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DialogComponent } from './dialog/dialog.component';
     NavbarComponent,
     FormComponent,
     TableComponent,
-    DialogComponent,
+    ModalComponent,
+    CardModalComponent,
   ],
   imports: [
     CommonModule,

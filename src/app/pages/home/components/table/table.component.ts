@@ -1,24 +1,49 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { AfterViewInit, Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
+
 import { MatTableDataSource } from '@angular/material/table';
-import { select, Store } from '@ngrx/store';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+
 import { Observable } from 'rxjs';
 import { Coin, CoinList } from 'src/app/entity/entity';
-import * as homeSelectors from '../../state/home.selectors'
+
+interface TableModel {
+  id: string;
+  name: string;
+  price: string;
+  changes_1h: string;
+  changes_24h: string;
+  changes_7d: string;
+  changes_30d: string;
+  list: () => string[];
+}
 
 @Component({
   selector: 'crip-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements AfterViewInit {
+export class TableComponent implements OnInit, AfterViewInit {
 
-  columnsToDisplay = ['id', 'name', 'price', 'last hour', 'today', 'last week', 'last month'];
-  dataSource: MatTableDataSource<Coin>;
+  columnsToDisplay: TableModel = {
+    id: '#',
+    name: 'Name',
+    price: 'Price Now',
+    changes_1h: 'Last Hour (%)',
+    changes_24h: 'Today (%)',
+    changes_7d: 'Last Week (%)',
+    changes_30d: 'Last Month (%)',
+    list: () => (['id', 'name', 'price', 'changes_1h', 'changes_24h', 'changes_7d', 'changes_30d'])
+  };
 
-  response$: Observable<CoinList> | undefined;
-  data: Coin[] | undefined;
+  dataSource: MatTableDataSource<Coin> | undefined;
+
+  @Input()
+  data$: Observable<CoinList> | undefined;
+
+  @Output()
+  detailsId = new EventEmitter<string>();
+
   currency: string | undefined;
 
   @ViewChild(MatPaginator)
@@ -27,27 +52,40 @@ export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  constructor(private store: Store){
-    this.response$ = this.store.pipe(select(homeSelectors.selectResponse));
-    this.response$.subscribe(response => {
-      this.data = response.data;
+  ngOnInit(): void{
+    this.data$?.subscribe(response => {
       this.currency = response.status.currency;
+      this.dataSource = new MatTableDataSource(response.data);
     });
-
-    this.dataSource = new MatTableDataSource(this.data);
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.dataSource){
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource){
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
     }
+  }
+
+  dialogDetails(id: any): void{
+    this.detailsId.emit(id.toString());
+  }
+
+  include(key: string, ...args: string[]): boolean{
+    return args.includes(key);
+  }
+
+  moduleOfNumber(num: number): number{
+    return Math.abs(num);
   }
 }

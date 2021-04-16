@@ -1,5 +1,11 @@
 .table-container {
+  height: calc(100% - 16rem);
+  overflow-x: auto;
   text-align: justify;
+}
+
+.table-filter {
+  margin-left: 1.5rem;
 }
 
 th {
@@ -10,6 +16,10 @@ th {
 td {
   width: fit-content;
   max-width: 20rem;
+}
+
+tr:hover {
+  background-color: #ffffff10;
 }
 
 .table {

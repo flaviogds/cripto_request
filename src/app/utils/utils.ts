@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Currency } from '../entity/currency';
-import { Coin, CoinList } from '../entity/entity';
+import { Coin, CoinList, Details } from '../entity/entity';
 
 export function coinList(response: any, convert: string): CoinList{
 
@@ -15,35 +15,26 @@ export function coinList(response: any, convert: string): CoinList{
     };
 }
 
-export function detailCoin(response: any, id: string): Coin{
+export function detailCoin(response: any, key: string): Details{
     return {
-        id: response.data[id].id,
-        name: response.data[id].name,
-        symbol: response.data[id].symbol,
-        category: response.data[id].category,
-        description: response.data[id].description,
-        slug: response.data[id].slug,
-        logo: response.data[id].log,
-        subreddit: response.data[id].subreddit,
-        tags: response.data[id].tags,
-        tag_names: response.data[id]['tag-names'],
-        tag_groups: response.data[id]['tag-groups'],
-        platform: response.data[id].platform,
-        date_added: response.data[id].date_added,
-        num_market_pairs: undefined,
-        max_supply: undefined,
-        circulating_supply: undefined,
-        total_supply: undefined,
-        cmc_rank: undefined,
-        last_updated: undefined,
-        quote: undefined,
+        id: response.data[key].id,
+        category: response.data[key].category,
+        description: response.data[key].description,
+        slug: response.data[key].slug,
+        logo: response.data[key].log,
+        subreddit: response.data[key].subreddit,
+        tags: response.data[key].tags,
+        tag_names: response.data[key]['tag-names'],
+        tag_groups: response.data[key]['tag-groups'],
+        platform: response.data[key].platform,
+        date_added: response.data[key].date_added,
         urls: {
-            website: response.data[id].urls.website,
-            message_board: response.data[id].urls.message_board,
-            explorer: response.data[id].urls.explorer,
-            reddit: response.data[id].urls.reddit,
-            technical_doc: response.data[id].urls.technical_doc,
-            source_code: response.data[id].urls.source_code
+            website: response.data[key].urls.website,
+            message_board: response.data[key].urls.message_board,
+            explorer: response.data[key].urls.explorer,
+            reddit: response.data[key].urls.reddit,
+            technical_doc: response.data[key].urls.technical_doc,
+            source_code: response.data[key].urls.source_code
         }
     };
 }
@@ -53,24 +44,14 @@ function makeCoin(entity: any): Coin{
         id: entity.id,
         name: entity.name,
         symbol: entity.symbol,
-        category: undefined,
-        description: undefined,
-        slug: entity.slug,
-        logo: undefined,
-        subreddit: undefined,
-        tags: entity.tags,
-        tag_names:  undefined,
-        tag_groups: undefined,
-        platform: entity.platform,
-        date_added: entity.date_added,
         num_market_pairs: entity.num_market_pairs,
         max_supply: entity.max_supply,
         circulating_supply: entity.circulating_supply,
         total_supply: entity.total_supply,
         cmc_rank: entity.cmc_rank,
         last_updated: entity.last_updated,
+        details: undefined,
         quote: makeQuote(entity.quote),
-        urls: undefined,
     };
 }
 
@@ -157,12 +138,21 @@ function trend(value: number): boolean{
     return (value / Math.abs(value)) !== -1;
 }
 
-export function makeCurrency( data: any | Observable<any> ): Currency[] {
-    return data.map((curr: any) => ({
-        id: curr.id,
-        name: curr.name,
-        currency: curr.currency,
-        code: curr.code,
-        symbol: curr.symbol
-    }));
+export function createLocaleList( data: any | Observable<any> ): Currency[] {
+    return data.locale.map((curr: any) => locale(curr));
+}
+
+export function createLocale( data: any | Observable<any>, id: string ): Currency {
+    return locale(data.locale.filter((curr: any) => curr.id === id)[0]);
+}
+
+function locale( data: any): Currency {
+    return ({
+        id: data.id,
+        name: data.name,
+        locale: data.locale,
+        currency: data.currency,
+        code: data.code,
+        symbol: data.symbol
+    });
 }

@@ -1,0 +1,61 @@
+mat-card {
+  display: flex;
+}
+
+mat-card-header {
+  width: fit-content;
+  display: block;
+  justify-content: center;
+}
+
+.details {
+  text-align: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.card-image {
+  width: 7.5rem;
+  margin: auto;
+}
+
+.card-content {
+  width: fit-content;
+  padding-left: 2rem;
+  text-align: start;
+  justify-content: space-between;
+}
+
+.card-description {
+  width: 30rem;
+  word-wrap: break-word;
+}
+
+.card-table {
+  width: 100%;
+  margin-top: 1rem;
+  text-align: start;
+}
+
+.card-table th {
+  height: 2rem;
+  text-align: start;
+  align-items: center;
+  font-weight: normal;
+}
+
+.card-table td {
+  min-width: fit-content;
+  max-width: 20rem;
+  align-items: center; 
+  justify-content: space-between;
+  text-align: end;
+  word-wrap: break-word;
+}
+
+.card-table-footer {
+  width: 100%;
+  margin-top: 2rem;
+  text-align: end;
+  font-size: 0.75rem;
+}

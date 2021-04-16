@@ -1,0 +1,14 @@
+<ng-container>
+  <div mat-dialog-title class="dialog-title">
+    {{ data.name }}
+    <span class="dialog-subtitle">{{ data.symbol }}</span>
+  </div>
+
+  <mat-dialog-content>
+    <crip-card-modal [data]="data" ></crip-card-modal>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</ng-container>

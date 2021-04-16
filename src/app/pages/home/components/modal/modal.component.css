@@ -1,0 +1,12 @@
+.dialog-title{
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.dialog-subtitle{
+    border-radius: 0.35rem;
+    padding: 0.1rem 0.2rem;
+    font-size: 0.9rem;
+    color: #000000a4;
+    background-color: #ffffff4d;
+}

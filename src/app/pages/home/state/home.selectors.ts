@@ -12,6 +12,11 @@ export const selectResponse = createSelector(
     (state: StateModel) => state.response,
 );
 
+export const selectDetails = createSelector(
+    selectFeature,
+    (state: StateModel) => state.details,
+);
+
 export const selectLoading = createSelector(
     selectFeature,
     (state: StateModel) => state.loading,
@@ -20,4 +25,14 @@ export const selectLoading = createSelector(
 export const selectFailed = createSelector(
     selectFeature,
     (state: StateModel) => state.failed,
+);
+
+export const selectLocalesList = createSelector(
+    selectFeature,
+    (state: StateModel) => state.locales,
+);
+
+export const selectCurrency = createSelector(
+    selectFeature,
+    (state: StateModel) => state.currency,
 );
