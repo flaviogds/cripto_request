@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 
 import { Observable } from 'rxjs';
 import { Coin, CoinList } from 'src/app/entity/entity';
+import { Currency } from 'src/app/entity/currency';
 
 interface TableModel {
   id: string;
@@ -41,6 +42,9 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input()
   data$: Observable<CoinList> | undefined;
 
+  @Input()
+  currency$: Observable<Currency> | undefined;
+
   @Output()
   detailsId = new EventEmitter<string>();
 
@@ -53,8 +57,9 @@ export class TableComponent implements OnInit, AfterViewInit {
   sort!: MatSort;
 
   ngOnInit(): void{
+    this.currency$?.subscribe(currency => this.currency = currency.code);
+
     this.data$?.subscribe(response => {
-      this.currency = response.status.currency;
       this.dataSource = new MatTableDataSource(response.data);
     });
   }

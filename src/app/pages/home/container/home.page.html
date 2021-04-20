@@ -3,9 +3,9 @@
         <crip-navbar>
             <crip-form
                 *ngIf="!(loading$ | async)"
-                [locales$]="(locales$ | async)['locales']"
+                [locales$]="locales$"
                 [currency$]="currency$"
-                (newCurrency)="currency($event)">
+                (newCurrency)="newCurrency($event)">
             </crip-form>
         </crip-navbar>
     </div>
@@ -19,20 +19,20 @@
             </mat-toolbar>
         </div>
 
-        <ng-container>
+        <ng-container *ngIf="(loading$ | async)">
             <mat-spinner
-                *ngIf="(loading$ | async)"
                 class="loading"
                 color="accent">
             </mat-spinner>
         </ng-container>
 
-        <ng-container>
+        <ng-container *ngIf="!(loading$ | async)">
             <crip-table
-                *ngIf="!(loading$ | async)"
                 [data$]="response$"
+                [currency$]="currency$"
                 (detailsId)="details($event)">
             </crip-table>
         </ng-container>
     </div>
 </div>
+

@@ -3,14 +3,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Coin } from 'src/app/entity/entity';
 
 @Component({
-  selector: 'crip-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  selector: 'crip-details',
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.css']
 })
-export class ModalComponent implements OnInit {
+export class DetailComponent implements OnInit {
 
   constructor(
-    private dialogRef: MatDialogRef<ModalComponent>,
+    private dialogRef: MatDialogRef<DetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Coin
   ){}
 

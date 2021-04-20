@@ -21,11 +21,11 @@ interface TableLinkModel {
 }
 
 @Component({
-  selector: 'crip-card-modal',
-  templateUrl: './card-modal.component.html',
-  styleUrls: ['./card-modal.component.css']
+  selector: 'crip-detail-card',
+  templateUrl: './detail-card.component.html',
+  styleUrls: ['./detail-card.component.css']
 })
-export class CardModalComponent {
+export class DetailCardComponent {
 
   columnQuote: TableQuoteModel = {
     price: 'Price',

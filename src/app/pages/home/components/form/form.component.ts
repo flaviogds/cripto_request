@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
 import { Observable } from 'rxjs';
-import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 
 import { Currency } from '../../../../entity/currency';
@@ -18,38 +19,49 @@ export class FormComponent implements OnInit {
   @Input()
   currency$: Observable<Currency> | undefined;
 
+  currency: Currency | undefined;
+
   @Output()
   newCurrency = new EventEmitter<string>();
 
-  myControl = new FormControl();
-  options: string[] = [];
-  filteredOptions: Observable<string[]> | undefined;
-
+  input: FormControl | undefined;
+  options: Currency[] | undefined;
+  filteredOptions: Observable<Currency[]> | undefined;
 
   ngOnInit(): void {
-    this.locales$?.subscribe(locale => {
-      this.options = locale.map(curr => curr.locale.concat(' (', curr.symbol, ')'));
-    });
+    this.input = new FormControl();
 
-    this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
+    this.currency$?.subscribe(currency =>
+      this.currency = currency
+    );
+
+    this.locales$?.subscribe(data =>
+      this.options = data.locales
+    );
+
+    this.filteredOptions = this.input.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
-  private _filter(value: string): string[] {
+  private _filter(value: string): any {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    if (this.options){
+      return this.options?.filter(locale =>
+        locale.textValue
+          .toLowerCase()
+          .includes(filterValue));
+    }
   }
 
   currencyChanges(): void{
-    this.newCurrency.emit('2781');
+    this.newCurrency.emit(
+      this._filter(this.input?.value ? this.input?.value : this.currency?.locale)
+        .pop()
+        .id
+    );
   }
-
-  placeholder(currency: any): string{
-    return currency.locale.concat(' (', currency.symbol, ')');
-  }
-
 }

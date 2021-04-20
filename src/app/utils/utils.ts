@@ -3,7 +3,6 @@ import { Currency } from '../entity/currency';
 import { Coin, CoinList, Details } from '../entity/entity';
 
 export function coinList(response: any, convert: string): CoinList{
-
     return {
         status:
         {
@@ -151,7 +150,7 @@ function locale( data: any): Currency {
         id: data.id,
         name: data.name,
         locale: data.locale,
-        currency: data.currency,
+        textValue: ''.concat(`${data.locale} (${data.code})`),
         code: data.code,
         symbol: data.symbol
     });

@@ -6,6 +6,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { MaterialModule } from '../../material/material.module';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
 
 import { featureKey } from './state/home.selectors';
 import { reducers } from './state/home.reducer';
@@ -16,8 +18,9 @@ import { HomePage } from './container/home.page';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormComponent } from './components/form/form.component';
 import { TableComponent } from './components/table/table.component';
-import { ModalComponent } from './components/modal/modal.component';
-import { CardModalComponent } from './components/card-modal/card-modal.component';
+import { DetailComponent } from './components/details/detail.component';
+import { DetailCardComponent } from './components/detail-card/detail-card.component';
+import { DialogErrorComponent } from './components/dialog-error/dialog-error.component';
 
 @NgModule({
   declarations: [
@@ -25,13 +28,15 @@ import { CardModalComponent } from './components/card-modal/card-modal.component
     NavbarComponent,
     FormComponent,
     TableComponent,
-    ModalComponent,
-    CardModalComponent,
+    DetailComponent,
+    DetailCardComponent,
+    DialogErrorComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     MaterialModule,
+    ReactiveFormsModule,
     StoreModule.forFeature(featureKey, reducers),
     EffectsModule.forFeature([CoinEffects]),
   ]

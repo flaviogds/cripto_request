@@ -6,7 +6,10 @@ export interface StateModel{
     response: any;
     details: any;
     loading: boolean;
-    failed: boolean;
+    failed: {
+        status: boolean,
+        response: any,
+    };
     locales: any;
     currency: any;
 }
@@ -15,7 +18,10 @@ export const initialState: StateModel = {
     response:  {},
     details: {},
     loading: false,
-    failed: false,
+    failed: {
+        status: false,
+        response: {}
+    },
     locales: [],
     currency: {
         id: '2781',
@@ -53,15 +59,6 @@ const reducer = createReducer(
         })
     ),
     on(
-        homeAction.loadFailed,
-        state => ({
-            ...state,
-            loading: false,
-            failed: true
-        })
-    ),
-
-    on(
         homeAction.loadLocalesConcluded,
         (state, locales) => ({
             ...state,
@@ -69,16 +66,25 @@ const reducer = createReducer(
             loading: false
         })
     ),
-
     on(
         homeAction.changeCurrencyConcluded,
         (state, currency) => ({
             ...state,
-            currency,
+            ...currency,
             loading: false
         })
     ),
-
+    on(
+        homeAction.loadFailed,
+        (state, response) => ({
+            ...state,
+            loading: false,
+            failed: {
+                status: true,
+                response
+            }
+        })
+    ),
 );
 
 export function reducers(state: StateModel | undefined, action: Action): StateModel{
