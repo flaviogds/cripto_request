@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { Coin } from 'src/app/entity/coins-entity';
 import { TableLinkModel, TableQuoteModel } from '../entity/table-entity';
-import { columnQuote, columnLiks } from '../entity/table-enum';
+import { columnQuote, columnLinks } from '../entity/table-enum';
+
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'crip-detail-card',
@@ -21,20 +23,34 @@ export class DetailCardComponent {
       'volume_24h',
       'market_cap',
     ],
+    getName: (key: string) =>
+      Object.entries(columnQuote)
+        .filter(entrie => entrie[0].match(key))[0][1],
   };
 
-  columnLiks: TableLinkModel = {
-    ...columnLiks,
+  columnLinks: TableLinkModel = {
+    ...columnLinks,
     list: () => [
       'website',
       'technical_doc',
       'source_code',
       'explorer'
     ],
+    getName: (key: string) =>
+      Object.entries(columnLinks)
+        .filter(entrie => entrie[0].match(key))[0][1],
   };
 
   @Input()
-  data: Coin | undefined;
+  data: Coin | undefined ;
+
+  mapProperty(property: any, ...args: string[]): any{
+    let value = property;
+
+    args.forEach(key =>  value = value[key]);
+
+    return value;
+  }
 
   include(key: string, ...args: string[]): boolean {
     return args.includes(key);
@@ -42,5 +58,9 @@ export class DetailCardComponent {
 
   moduleOfNumber(num: number): number {
     return Math.abs(num);
+  }
+
+  getImage(id: any): string{
+    return environment.imagUrl.concat(`${id}.png`);
   }
 }

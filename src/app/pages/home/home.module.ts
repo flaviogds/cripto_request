@@ -19,6 +19,7 @@ import { DialogErrorComponent } from './components/dialog-error/dialog-error.com
 import { featureKey } from './state/home.selectors';
 import { reducers } from './state/home.reducer';
 import { CoinEffects } from './state/home.effects';
+import { DialogAboutComponent } from './components/dialog-about/dialog-about.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CoinEffects } from './state/home.effects';
     DetailComponent,
     DetailCardComponent,
     DialogErrorComponent,
+    DialogAboutComponent,
   ],
   imports: [
     CommonModule,

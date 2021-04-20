@@ -14,6 +14,22 @@ export function coinList(response: any, convert: string): CoinList{
     };
 }
 
+function makeCoin(entity: any): Coin{
+    return {
+        id: entity.id,
+        name: entity.name,
+        symbol: entity.symbol,
+        num_market_pairs: entity.num_market_pairs,
+        max_supply: entity.max_supply,
+        circulating_supply: entity.circulating_supply,
+        total_supply: entity.total_supply,
+        cmc_rank: entity.cmc_rank,
+        last_updated: entity.last_updated,
+        details: null,
+        quote: makeQuote(entity.quote),
+    };
+}
+
 export function detailCoin(response: any, key: string): Details{
     return {
         id: response.data[key].id,
@@ -35,22 +51,6 @@ export function detailCoin(response: any, key: string): Details{
             technical_doc: response.data[key].urls.technical_doc,
             source_code: response.data[key].urls.source_code
         }
-    };
-}
-
-function makeCoin(entity: any): Coin{
-    return {
-        id: entity.id,
-        name: entity.name,
-        symbol: entity.symbol,
-        num_market_pairs: entity.num_market_pairs,
-        max_supply: entity.max_supply,
-        circulating_supply: entity.circulating_supply,
-        total_supply: entity.total_supply,
-        cmc_rank: entity.cmc_rank,
-        last_updated: entity.last_updated,
-        details: undefined,
-        quote: makeQuote(entity.quote),
     };
 }
 
@@ -84,7 +84,7 @@ function makeQuote(quote: any): any {
             last_updated: quote[key].last_updated
         };
     }else{
-        return undefined;
+        return null;
     }
 }
 
@@ -129,7 +129,7 @@ export function globalMetric(response: any): any{
             last_updated: response.data.last_updated
         };
     }else{
-        return undefined;
+        return null;
     }
 }
 

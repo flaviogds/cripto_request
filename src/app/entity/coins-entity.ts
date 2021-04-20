@@ -16,8 +16,8 @@ export interface Coin {
   total_supply: number;
   cmc_rank: number;
   last_updated: string;
-  details: Details | undefined;
-  quote: Quote | undefined;
+  details: Details | null;
+  quote: Quote | null;
 }
 
 export interface Details {

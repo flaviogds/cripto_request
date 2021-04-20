@@ -17,6 +17,7 @@ import { Coin, CoinList } from 'src/app/entity/coins-entity';
 import { Currency } from 'src/app/entity/currency-entity';
 import { TableModel } from '../entity/table-entity';
 import { columnsToDisplay } from '../entity/table-enum';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'crip-table',
@@ -53,7 +54,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   sort!: MatSort;
 
   currency: string | undefined;
-  dataSource: MatTableDataSource<Coin> | undefined;
+  dataSource!: MatTableDataSource<Coin>;
 
   ngOnInit(): void {
     this.currency$?.subscribe((currency) => (this.currency = currency.code));
@@ -85,11 +86,23 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.detailsId.emit(id.toString());
   }
 
+  mapProperty(property: any, ...args: string[]): any{
+    let value = property;
+
+    args.forEach(key =>  value = value[key]);
+
+    return value;
+  }
+
   include(key: string, ...args: string[]): boolean {
     return args.includes(key);
   }
 
   moduleOfNumber(num: number): number {
     return Math.abs(num);
+  }
+
+  getImage(id: any): string{
+    return environment.imagUrl.concat(`${id}.png`);
   }
 }

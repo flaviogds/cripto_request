@@ -1,45 +1,49 @@
-<ng-container *ngIf="data?.details">
+<ng-container>
   <mat-card>
     <mat-card-header>
-      <img mat-card-md-image class="card-image"
-        src="https://s2.coinmarketcap.com/static/img/coins/128x128/{{ data.id }}.png" alt="{{ data.symbol }}">
+      <ng-container>
+        <img
+          mat-card-md-image class="card-image"
+          src="{{ getImage(data?.id)}}" alt="{{ data?.symbol }}">
+      </ng-container>
 
       <div class="details">
         <p>Active:</p>
-        <p>{{ data.details.date_added | date }}</p>
+        <p>{{ data?.details?.date_added | date }}</p>
         <p>Circulation. supply:</p>
-        <p>{{ data.circulating_supply | currency : ' ' }} {{ data.symbol }}</p>
+        <p>{{ data?.circulating_supply | currency }} {{ data?.symbol }}</p>
         <p>Total supply:</p>
-        <p>{{ data.max_supply | currency : ' ' }} {{ data.symbol }}</p>
+        <p>{{ data?.max_supply | currency }} {{ data?.symbol }}</p>
       </div>
     </mat-card-header>
 
     <mat-card-content class="card-content">
       <mat-tab-group mat-align-tabs="start" color="accent" dynamicHeight>
-
         <mat-tab label="Overview">
-          <p class="card-description">{{ data.details.description }}</p>
-        </mat-tab>
+          <p class="card-description">
+            {{ data?.details?.description }}
+          </p>
+        </mat-tab> 
 
         <mat-tab label="Quotes">
           <table class="card-table">
             <ng-container *ngFor="let key of columnQuote.list()">
               <tr>
                 <th>
-                  {{ columnQuote[key] }}
+                  {{ columnQuote.getName(key) }}
                   <ng-container *ngIf="include(key, 'price')">
-                    ({{ data.quote.currency }})
+                    ({{ data?.quote?.currency }})
                   </ng-container>
                 </th>
                 <td *ngIf="include(key, 'price', 'volume_24h', 'market_cap')">
-                  {{ data.quote[key] | currency : data.quote.currency : 'symbol' : '2.2-5'}}
+                  {{ mapProperty(data?.quote, key) | currency : data?.quote?.currency : 'symbol' : '2.2-5'}}
                 </td>
 
                 <td *ngIf="include(key, 'changes_1h', 'changes_24h', 'changes_7d', 'changes_30d')">
-                  <mat-icon color="{{ data.quote[key].rateUp ? 'accent' : 'warn'}}">
-                    arrow_drop_{{data.quote[key].rateUp ? "up" : "down"}}
+                  <mat-icon color="{{ mapProperty(data?.quote, key, 'rateUp') ? 'accent' : 'warn'}}">
+                    arrow_drop_{{ mapProperty(data?.quote, key, 'rateUp') ? "up" : "down"}}
                   </mat-icon>
-                  {{ (moduleOfNumber(data.quote[key].value) | number : '1.2-3')}}
+                  {{ (moduleOfNumber(mapProperty(data?.quote, key, 'value')) | number : '1.2-3')}}
                 </td>
               </tr>
               <mat-divider></mat-divider>
@@ -47,28 +51,28 @@
           </table>
 
           <div class="card-table-footer">
-            <p>Last Update: {{ data.quote.last_updated | date: 'medium' }}</p>
+            <p>Last Update: {{ data?.quote?.last_updated | date: 'medium' }}</p>
           </div>
         </mat-tab>
 
         <mat-tab label="Links">
           <table class="card-table table-links">
-            <ng-container *ngFor="let key of columnLiks.list()">
+            <ng-container *ngFor="let key of columnLinks.list()">
               <tr>
-                <th>{{ columnLiks[key] }}</th>
-                <td *ngIf="data.details.urls">
-                  <ng-container *ngFor="let url of data.details.urls[key]">
-                    <a mat-button href="{{ url }}" target="_blank">{{ url }}</a>
-                  </ng-container>
-                </td>
+                <th>{{ columnLinks.getName(key) }}</th>
+                <ng-container>
+                  <td>
+                    <ng-container *ngFor="let url of mapProperty(data?.details, 'urls', key)">
+                      <a mat-button href="{{ url }}" target="_blank">{{ url }}</a>
+                    </ng-container>
+                  </td>
+                </ng-container>
               </tr>
               <mat-divider></mat-divider>
             </ng-container>
           </table>
         </mat-tab>
-
       </mat-tab-group>
-
     </mat-card-content>
   </mat-card>
 </ng-container>

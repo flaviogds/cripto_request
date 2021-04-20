@@ -23,7 +23,7 @@ export class FormComponent implements OnInit {
   @Output()
   newCurrency = new EventEmitter<string>();
 
-  input: FormControl | undefined;
+  input = new FormControl();
   options: Currency[] | undefined;
   filteredOptions: Observable<Currency[]> | undefined;
 

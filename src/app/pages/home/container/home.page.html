@@ -11,9 +11,33 @@
 
     <div class="content">
         <div class="header">
-            <mat-toolbar class="toolbar">
-                <button mat-fab>
-                    <mat-icon> home </mat-icon>
+            <mat-toolbar>
+                <span>CRYPTO</span>
+                <span class="toolbar-space"></span>
+                <a
+                    mat-button
+                    matTooltip="SourceCode"
+                    aria-label="SourceCode on GitHub"
+                    href="https://github.com/flaviogds/cripto_request"
+                    target="_blank">
+                    <mat-icon>
+                        <img src="../../../../assets/images/github-circle-white-transparent.svg" alt="GitHub" srcset="">
+                    </mat-icon>
+                </a>
+                <a
+                    mat-button
+                    matTooltip="Readme"
+                    aria-label="Readme"
+                    href="https://github.com/flaviogds/cripto_request#readme"
+                    target="_blank">
+                    <mat-icon> description </mat-icon>
+                </a>
+                <button
+                    (click)="about()"
+                    mat-button
+                    matTooltip="About"
+                    aria-label="About">
+                    <mat-icon> info </mat-icon>
                 </button>
             </mat-toolbar>
         </div>

@@ -7,6 +7,7 @@ export interface TableQuoteModel {
   market_cap: string;
   volume_24h: string;
   list: () => string[];
+  getName: (key: string) => string;
 }
 
 export interface TableLinkModel {
@@ -15,4 +16,5 @@ export interface TableLinkModel {
   source_code: string;
   explorer: string;
   list: () => string[];
+  getName: (key: string) => string;
 }

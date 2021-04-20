@@ -8,7 +8,7 @@ export enum columnQuote {
   volume_24h = 'Volume 24h',
 }
 
-export enum columnLiks {
+export enum columnLinks {
   website = 'Website',
   technical_doc = 'Documentation',
   source_code = 'Source Code',

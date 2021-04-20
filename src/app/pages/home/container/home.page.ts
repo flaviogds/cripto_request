@@ -8,10 +8,12 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import * as homeSelectors from '../state/home.selectors';
 import * as homeActions from '../state/home.actions';
 
-import { DetailComponent } from '../components/details/detail.component';
-import { DialogErrorComponent } from '../components/dialog-error/dialog-error.component';
 import { Coin, CoinList } from 'src/app/entity/coins-entity';
 import { Currency } from 'src/app/entity/currency-entity';
+
+import { DetailComponent } from '../components/details/detail.component';
+import { DialogAboutComponent } from '../components/dialog-about/dialog-about.component';
+import { DialogErrorComponent } from '../components/dialog-error/dialog-error.component';
 
 @Component({
   selector: 'crip-home',
@@ -44,7 +46,7 @@ export class HomePage implements OnInit {
     this.currency$ = this.store.pipe(select(homeSelectors.selectCurrency));
     this.locales$ = this.store.pipe(select(homeSelectors.selectLocalesList));
 
-    this.load('1', '5000');
+    this.load('1', '10');
     setTimeout(() => this.store.dispatch(homeActions.loadLocales()), 1000);
     // this.tryIfFailure();
   }
@@ -95,7 +97,11 @@ export class HomePage implements OnInit {
 
   newCurrency(id: string): void {
     this.store.dispatch(homeActions.changeCurrency({ id }));
-    setTimeout(() => this.load('1', '5000'), 1000);
+    setTimeout(() => this.load('1', '10'), 1000);
+  }
+
+  about(): void{
+    this.openDialog(DialogAboutComponent, {});
   }
 
   openDialog(component: any, data: any): void {

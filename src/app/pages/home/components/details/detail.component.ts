@@ -15,7 +15,9 @@ export class DetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.data.details?.id === undefined) {
+    if (this.data.details === undefined
+        || this.data.details?.id === undefined
+      ) {
       this.dialogRef.close();
     }
   }
