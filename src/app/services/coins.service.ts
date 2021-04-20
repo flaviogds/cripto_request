@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment.prod';
-import { CoinList, Coin } from 'src/app/entity/entity';
+import { CoinList, Coin } from 'src/app/entity/coins-entity';
 import { detailCoin, coinList, quoteCoin } from 'src/app/utils/utils';
 
 @Injectable({
@@ -51,6 +51,6 @@ export class ServiceCoin{
   }
 
   private request<T>(url: string, params: HttpParams): Observable<T>{
-    return this.http.get<T>(environment.apiMock.concat(url), { params });
+    return this.http.get<T>(environment.apiUrl.concat(url), { params });
   }
 }

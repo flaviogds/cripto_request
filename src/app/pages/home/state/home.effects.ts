@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { ServiceCoin } from 'src/app/services/coins.service';
-import { Coin, CoinList } from 'src/app/entity/entity';
+import { Coin, CoinList } from 'src/app/entity/coins-entity';
 import * as homeAction from '../state/home.actions';
 
 import { CurrencyService } from 'src/app/services/currency.service';
-import { Currency } from 'src/app/entity/currency';
+import { Currency } from 'src/app/entity/currency-entity';
 
 @Injectable()
 export class CoinEffects{
@@ -28,7 +28,7 @@ export class CoinEffects{
                 mergeMap(() =>
                     this.coinService.getAllCoin()),
                 catchError((err, caught$) => {
-                    this.store.dispatch(homeAction.loadFailed( { response: err } ));
+                    this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
                 }),
                 map((response: CoinList) => homeAction.loadListOfCoinsConcluded({ response })),
@@ -42,7 +42,7 @@ export class CoinEffects{
                 mergeMap(({start, limit, convert}) =>
                     this.coinService.getAllCoinFiltered(start, limit, convert)),
                 catchError((err, caught$) => {
-                    this.store.dispatch(homeAction.loadFailed( { response: err } ));
+                    this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
                 }),
                 map((response: CoinList) => homeAction.loadListOfCoinsConcluded({ response })),
@@ -56,7 +56,7 @@ export class CoinEffects{
                 mergeMap(({ id }) =>
                     this.coinService.getCoinById(id)),
                 catchError((err, caught$) => {
-                    this.store.dispatch(homeAction.loadFailed( { response: err } ));
+                    this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
                 }),
                 map((details: Coin) => homeAction.loadCoinByIdOrNameConcluded({ details })),
@@ -70,7 +70,7 @@ export class CoinEffects{
                 mergeMap(({ name }) =>
                     this.coinService.getCoinByName(name)),
                 catchError((err, caught$) => {
-                    this.store.dispatch(homeAction.loadFailed( { response: err } ));
+                    this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
                 }),
                 map((details: Coin) => homeAction.loadCoinByIdOrNameConcluded({ details })),
@@ -84,7 +84,7 @@ export class CoinEffects{
                 mergeMap(({ id }) =>
                     this.coinService.getQuoteCoinById(id)),
                 catchError((err, caught$) => {
-                    this.store.dispatch(homeAction.loadFailed( { response: err } ));
+                    this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
                 }),
                 map((details: Coin) => homeAction.loadCoinByIdOrNameConcluded({ details })),
@@ -97,7 +97,7 @@ export class CoinEffects{
                 ofType(homeAction.loadLocales),
                 mergeMap(() => this.currencyService.getAllLocales()),
                 catchError((err, caught$) => {
-                    this.store.dispatch(homeAction.loadFailed( { response: err } ));
+                    this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
                 }),
                 map((locales: Currency[]) => homeAction.loadLocalesConcluded({ locales })),
@@ -110,7 +110,7 @@ export class CoinEffects{
                 ofType(homeAction.changeCurrency),
                 mergeMap(({ id }) => this.currencyService.getCurrency( id )),
                 catchError((err, caught$) => {
-                    this.store.dispatch(homeAction.loadFailed( { response: err } ));
+                    this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
                 }),
                 map((currency: Currency) => homeAction.changeCurrencyConcluded({ currency })),

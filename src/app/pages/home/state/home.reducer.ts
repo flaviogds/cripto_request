@@ -39,7 +39,6 @@ const reducer = createReducer(
         homeAction.loadListOfCoins,
         homeAction.loadListOfCoinsDefault,
         homeAction.loadLocales,
-        homeAction.changeCurrency,
         state => ({...state, loading: true})
     ),
     on(
@@ -62,7 +61,7 @@ const reducer = createReducer(
         homeAction.loadLocalesConcluded,
         (state, locales) => ({
             ...state,
-            locales,
+            ...locales,
             loading: false
         })
     ),
@@ -76,13 +75,10 @@ const reducer = createReducer(
     ),
     on(
         homeAction.loadFailed,
-        (state, response) => ({
+        (state, failed) => ({
             ...state,
+            ...failed,
             loading: false,
-            failed: {
-                status: true,
-                response
-            }
         })
     ),
 );

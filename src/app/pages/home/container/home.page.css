@@ -11,7 +11,7 @@
 
 .header {
   height: 16rem;
-  background-image: url("../../../../assets/images/banner.jpg");
+  background-image: url("src/assets/images/banner.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }

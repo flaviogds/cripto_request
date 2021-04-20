@@ -25,7 +25,7 @@
                 <ng-container *ngIf="include(column.key, 'id', 'name')">
                     {{ coin[column.key] }}
                 </ng-container>
-                
+
                 <ng-container *ngIf="include(column.key, 'price')">
                     {{ moduleOfNumber(coin.quote[column.key]) | currency : currency : 'symbol' : '2.2-5' }}
                 </ng-container>

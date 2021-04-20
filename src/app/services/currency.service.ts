@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Currency } from '../entity/currency';
+import { Currency } from '../entity/currency-entity';
 import { createLocale, createLocaleList } from '../utils/utils';
 
 @Injectable({

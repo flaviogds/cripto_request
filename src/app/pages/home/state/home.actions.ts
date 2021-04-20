@@ -55,7 +55,7 @@ export const changeCurrencyConcluded = createAction(
 
 export const loadFailed = createAction(
     'Requisition Failed',
-    props<{response: any}>()
+    props<{status: boolean, response: any}>()
 );
 
 export const clearState = createAction(

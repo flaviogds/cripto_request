@@ -2,17 +2,16 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
-import { Currency } from '../../../../entity/currency';
+import { Currency } from 'src/app/entity/currency-entity';
 
 @Component({
   selector: 'crip-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnInit {
-
   @Input()
   locales$: Observable<Currency[]> | undefined;
 
@@ -31,37 +30,31 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.input = new FormControl();
 
-    this.currency$?.subscribe(currency =>
-      this.currency = currency
-    );
+    this.currency$?.subscribe((currency) => (this.currency = currency));
 
-    this.locales$?.subscribe(data =>
-      this.options = data.locales
-    );
+    this.locales$?.subscribe((data) => (this.options = data));
 
-    this.filteredOptions = this.input.valueChanges
-    .pipe(
+    this.filteredOptions = this.input.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value))
+      map((value) => this._filter(value))
     );
   }
 
   private _filter(value: string): any {
     const filterValue = value.toLowerCase();
 
-    if (this.options){
-      return this.options?.filter(locale =>
-        locale.textValue
-          .toLowerCase()
-          .includes(filterValue));
+    if (this.options) {
+      return this.options?.filter((locale) =>
+        locale.textValue.toLowerCase().includes(filterValue)
+      );
     }
   }
 
-  currencyChanges(): void{
+  currencyChanges(): void {
     this.newCurrency.emit(
-      this._filter(this.input?.value ? this.input?.value : this.currency?.locale)
-        .pop()
-        .id
+      this._filter(
+        this.input?.value ? this.input?.value : this.currency?.locale
+      ).pop().id
     );
   }
 }

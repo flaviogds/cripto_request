@@ -1,5 +1,4 @@
 <ng-container>
-
   <mat-toolbar>
     <mat-icon> request_quote </mat-icon>
     <span *ngIf="opened" class="nav-navtitle"> CRIPTO </span>
@@ -10,9 +9,13 @@
       <ng-content></ng-content>
     </mat-drawer>
 
-    <mat-drawer-content (click)="[drawer.toggle(), toggle()]" class="nav-navtoggle">
-      <button mat-icon-button >
-        <mat-icon class="material-icons"  color="accent">
+    <mat-drawer-content
+      (click)="[drawer.toggle(), toggle()]"
+      class="nav-navtoggle">
+      <button mat-icon-button>
+        <mat-icon
+          class="material-icons"
+          color="accent">
           {{ !opened ? 'menu' : 'close'}}
         </mat-icon>
       </button>

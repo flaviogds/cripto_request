@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -10,18 +10,15 @@ import * as homeActions from '../state/home.actions';
 
 import { DetailComponent } from '../components/details/detail.component';
 import { DialogErrorComponent } from '../components/dialog-error/dialog-error.component';
-import { Coin, CoinList } from 'src/app/entity/entity';
-import { Currency } from 'src/app/entity/currency';
-import { takeUntil } from 'rxjs/operators';
+import { Coin, CoinList } from 'src/app/entity/coins-entity';
+import { Currency } from 'src/app/entity/currency-entity';
 
 @Component({
   selector: 'crip-home',
   templateUrl: './home.page.html',
-  styleUrls: ['./home.page.css']
+  styleUrls: ['./home.page.css'],
 })
-export class HomePage implements OnInit, OnDestroy {
-
-  private componentDestroyed$ = new Subject();
+export class HomePage implements OnInit {
   private dialogRef: MatDialogRef<DetailComponent> | undefined;
 
   details$: Observable<Coin> | undefined;
@@ -35,10 +32,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   coinToDetail: Coin | undefined;
 
-  constructor(
-    private store: Store,
-    private dialog: MatDialog,
-  ) { }
+  constructor(private store: Store, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.response$ = this.store.pipe(select(homeSelectors.selectResponse));
@@ -50,68 +44,61 @@ export class HomePage implements OnInit, OnDestroy {
     this.currency$ = this.store.pipe(select(homeSelectors.selectCurrency));
     this.locales$ = this.store.pipe(select(homeSelectors.selectLocalesList));
 
-    this.load('1', '10');
+    this.load('1', '5000');
+    setTimeout(() => this.store.dispatch(homeActions.loadLocales()), 1000);
     // this.tryIfFailure();
   }
 
-  ngOnDestroy(): void {
-    this.componentDestroyed$.next();
-    this.componentDestroyed$.unsubscribe();
-    this.store.dispatch(homeActions.clearState());
-  }
-
-  /* unction caller a action to loader store */
-  load( ...args: string[]): void{
-    this.store.dispatch(homeActions.loadLocales());
-
-    this.currency$?.subscribe(currency => {
+  load(...args: string[]): void {
+    this.currency$?.subscribe((currency) => {
       this.store.dispatch(
         homeActions.loadListOfCoins({
           start: args[0],
           limit: args[1],
-          convert: currency.code
-        }),
+          convert: currency.code,
+        })
       );
     });
   }
 
-  tryIfFailure(): void{
-    this.failed$?.subscribe(failure => {
-      if (failure.status){
-        if (this.dialogRef === undefined){
-            this.openDialog(
-              DialogErrorComponent,
-              {data: { ...failure.response }}
-            );
-          }
+  tryIfFailure(): void {
+    this.failed$?.subscribe((failure) => {
+      if (failure.status) {
+        if (this.dialogRef === undefined) {
+          this.openDialog(DialogErrorComponent, {
+            data: { ...failure.response },
+          });
         }
+      }
     });
   }
 
-  details(id: string): void{
-    this.response$?.subscribe(response => {
-      this.coinToDetail = response.data.filter(coin => coin.id.toString() === id).pop();
+  details(id: string): void {
+    this.response$?.subscribe((response) => {
+      this.coinToDetail = response.data
+        .filter((coin) => coin.id.toString() === id)
+        .pop();
     });
     this.store.dispatch(homeActions.loadCoinById({ id }));
 
-    if (this.dialogRef === undefined){
-      this.details$?.subscribe(details =>
-        this.openDialog(
-          DetailComponent,
-          { data: {
+    if (this.dialogRef === undefined) {
+      this.details$?.subscribe((details) =>
+        this.openDialog(DetailComponent, {
+          data: {
             ...this.coinToDetail,
-            details
-          } }
-        ));
+            details,
+          },
+        })
+      );
     }
   }
 
-  newCurrency(id: string): void{
+  newCurrency(id: string): void {
     this.store.dispatch(homeActions.changeCurrency({ id }));
-    this.load('1', '10');
+    setTimeout(() => this.load('1', '5000'), 1000);
   }
 
   openDialog(component: any, data: any): void {
-    this.dialogRef = this.dialog.open( component, data );
+    this.dialogRef = this.dialog.open(component, data);
   }
 }
