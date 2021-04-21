@@ -13,7 +13,6 @@ import { Currency } from 'src/app/entity/currency-entity';
 
 import { DetailComponent } from '../components/details/detail.component';
 import { DialogAboutComponent } from '../components/dialog-about/dialog-about.component';
-import { DialogErrorComponent } from '../components/dialog-error/dialog-error.component';
 
 @Component({
   selector: 'crip-home',
@@ -21,7 +20,7 @@ import { DialogErrorComponent } from '../components/dialog-error/dialog-error.co
   styleUrls: ['./home.page.css'],
 })
 export class HomePage implements OnInit {
-  private dialogRef: MatDialogRef<DetailComponent> | undefined;
+  private dialogRef: MatDialogRef<any> | undefined;
 
   details$: Observable<Coin> | undefined;
   response$: Observable<CoinList> | undefined;
@@ -48,7 +47,6 @@ export class HomePage implements OnInit {
 
     this.load('1', '10');
     setTimeout(() => this.store.dispatch(homeActions.loadLocales()), 1000);
-    // this.tryIfFailure();
   }
 
   load(...args: string[]): void {
@@ -63,18 +61,6 @@ export class HomePage implements OnInit {
     });
   }
 
-  tryIfFailure(): void {
-    this.failed$?.subscribe((failure) => {
-      if (failure.status) {
-        if (this.dialogRef === undefined) {
-          this.openDialog(DialogErrorComponent, {
-            data: { ...failure.response },
-          });
-        }
-      }
-    });
-  }
-
   details(id: string): void {
     this.response$?.subscribe((response) => {
       this.coinToDetail = response.data
@@ -83,7 +69,7 @@ export class HomePage implements OnInit {
     });
     this.store.dispatch(homeActions.loadCoinById({ id }));
 
-    if (this.dialogRef === undefined) {
+    if (this.dialogRef === undefined){
       this.details$?.subscribe((details) =>
         this.openDialog(DetailComponent, {
           data: {
@@ -95,13 +81,13 @@ export class HomePage implements OnInit {
     }
   }
 
+  about(): void{
+    this.openDialog(DialogAboutComponent, {});
+  }
+
   newCurrency(id: string): void {
     this.store.dispatch(homeActions.changeCurrency({ id }));
     setTimeout(() => this.load('1', '10'), 1000);
-  }
-
-  about(): void{
-    this.openDialog(DialogAboutComponent, {});
   }
 
   openDialog(component: any, data: any): void {

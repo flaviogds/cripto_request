@@ -1,0 +1,5 @@
+mat-dialog-content {
+    width: 30rem;
+    word-wrap: break-word;
+    text-align: justify;
+}

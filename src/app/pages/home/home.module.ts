@@ -14,7 +14,6 @@ import { FormComponent } from './components/form/form.component';
 import { TableComponent } from './components/table/container/table.component';
 import { DetailComponent } from './components/details/detail.component';
 import { DetailCardComponent } from './components/detail-card/container/detail-card.component';
-import { DialogErrorComponent } from './components/dialog-error/dialog-error.component';
 
 import { featureKey } from './state/home.selectors';
 import { reducers } from './state/home.reducer';
@@ -29,7 +28,6 @@ import { DialogAboutComponent } from './components/dialog-about/dialog-about.com
     TableComponent,
     DetailComponent,
     DetailCardComponent,
-    DialogErrorComponent,
     DialogAboutComponent,
   ],
   imports: [
