@@ -45,7 +45,7 @@ export class HomePage implements OnInit {
     this.currency$ = this.store.pipe(select(homeSelectors.selectCurrency));
     this.locales$ = this.store.pipe(select(homeSelectors.selectLocalesList));
 
-    this.load('1', '10');
+    this.load('1', '5000');
     setTimeout(() => this.store.dispatch(homeActions.loadLocales()), 1000);
   }
 
@@ -87,7 +87,7 @@ export class HomePage implements OnInit {
 
   newCurrency(id: string): void {
     this.store.dispatch(homeActions.changeCurrency({ id }));
-    setTimeout(() => this.load('1', '10'), 1000);
+    setTimeout(() => this.load('1', '5000'), 1000);
   }
 
   openDialog(component: any, data: any): void {

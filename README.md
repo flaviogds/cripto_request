@@ -1,27 +1,32 @@
-# Cripto
+# CRYPTO
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+### ``Aplicação desenvolvida para o Bootcamp Everis Fullstack Developer da Digital Innovation One.``
 
-## Development server
+## Sobre
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+A aplicação apresenta a tabela de cotações em tempo real¹ das principais moedas digitais disponiveis na plataforma CoinMarketCap.  
+Desenvolvido como uma aplicação SPA utilizando Angular e Angular Material e consumindo a API CoinMarketCap.
+* Screenshot 1 - Pagina principal da aplicação
 
-## Code scaffolding
+![Sreenshot pagina principal](/docs/screenshot-1.jpeg)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Funções e Navagabilidade
 
-## Build
+Com a aplicação é possivel consultar a cotação de mais de 4500 moedas digitais, ativas, inativas ou disponiveis em plataformas fechadas e aplicar conversões cambiais para 93 paises.
+Consultar informações detalhadas, como: nome, descrição, data de criação, categoria, suprimento ativo, suprimento total, valor total ativo, valor total do suprimento, cotações diaria, semanal e mensal.
+* Screenshot 2 - Informações detalhes
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+![Sreenshot pagina principal](/docs/screenshot-2.jpeg)
 
-## Running unit tests
+## Limitações do serviço
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Os dados apresentados são fornecidos por CoinMarketCap a partir de sua API. 
+A CoinMarketCap impõe limitações diárias e mensais ao número de requisições feitas a sua API para seus assinantes não pagantes.
 
-## Running end-to-end tests
+Consulte a documentação da API para saber mais em <a href="https://coinmarketcap.com/api/documentation/v1/">coinmarketcap.com/api/documentation/v1/</a>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+Notas:
+    1 - A atualziação em tempo real da cotação das moedas depende da disponibilidade do serviço, como descrito no item *Limitações do serviço*.
+```

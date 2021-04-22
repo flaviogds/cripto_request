@@ -4,5 +4,4 @@ export const environment = {
   API_KEY_ALT: '34a55e3c-ec4d-486a-9187-98bd32992277',
   apiUrl: 'https://pro-api.coinmarketcap.com/v1/',
   imagUrl: 'https://s2.coinmarketcap.com/static/img/coins/128x128/',
-  apiMock: 'http://localhost:3000/'
 };

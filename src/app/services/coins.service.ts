@@ -51,6 +51,6 @@ export class ServiceCoin{
   }
 
   private request<T>(url: string, params: HttpParams): Observable<T>{
-    return this.http.get<T>(environment.apiMock.concat(url), { params });
+    return this.http.get<T>(environment.apiUrl.concat(url), { params });
   }
 }
