@@ -25,7 +25,6 @@ A CoinMarketCap impõe limitações diárias e mensais ao número de requisiçõ
 
 Consulte a documentação da API para saber mais em <a href="https://coinmarketcap.com/api/documentation/v1/">coinmarketcap.com/api/documentation/v1/</a>
 
-
 ```
 Notas:
     1 - A atualziação em tempo real da cotação das moedas depende da disponibilidade do serviço, como descrito no item *Limitações do serviço*.

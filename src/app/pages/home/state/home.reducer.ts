@@ -12,6 +12,7 @@ export interface StateModel{
     };
     locales: any;
     currency: any;
+    range: string;
 }
 
 export const initialState: StateModel = {
@@ -30,6 +31,7 @@ export const initialState: StateModel = {
         code: 'USD',
         symbol: '$'
     },
+    range: '500',
 };
 
 const reducer = createReducer(
@@ -37,7 +39,6 @@ const reducer = createReducer(
     on(homeAction.clearState, () => ({...initialState})),
     on(
         homeAction.loadListOfCoins,
-        homeAction.loadListOfCoinsDefault,
         homeAction.loadLocales,
         state => ({...state, loading: true})
     ),
@@ -50,11 +51,10 @@ const reducer = createReducer(
         })
     ),
     on(
-        homeAction.loadCoinByIdOrNameConcluded,
+        homeAction.loadCoinAndQuoteByIdOrNameConcluded,
         (state, { details }) => ({
             ...state,
             details,
-            loading: false
         })
     ),
     on(
@@ -70,7 +70,13 @@ const reducer = createReducer(
         (state, currency) => ({
             ...state,
             ...currency,
-            loading: false
+        })
+    ),
+    on(
+        homeAction.changeRangeOfCoins,
+        (state, range) => ({
+            ...state,
+            ...range,
         })
     ),
     on(

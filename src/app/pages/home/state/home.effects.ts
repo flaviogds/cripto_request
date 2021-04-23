@@ -21,26 +21,12 @@ export class CoinEffects{
         private currencyService: CurrencyService,
     ){}
 
-    loadListOfCoinsDefault$ = createEffect(
-        () => this.actions$
-            .pipe(
-                ofType(homeAction.loadListOfCoinsDefault),
-                mergeMap(() =>
-                    this.coinService.getAllCoin()),
-                catchError((err, caught$) => {
-                    this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
-                    return caught$;
-                }),
-                map((response: CoinList) => homeAction.loadListOfCoinsConcluded({ response })),
-            ),
-    );
-
     loadListOfCoins$ = createEffect(
         () => this.actions$
             .pipe(
                 ofType(homeAction.loadListOfCoins),
-                mergeMap(({start, limit, convert}) =>
-                    this.coinService.getAllCoinFiltered(start, limit, convert)),
+                mergeMap(({ param }) =>
+                    this.coinService.getAllCoins(param)),
                 catchError((err, caught$) => {
                     this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
@@ -49,31 +35,17 @@ export class CoinEffects{
             ),
     );
 
-    loadCoinById$ = createEffect(
+    loadCoinByIdOrName$ = createEffect(
         () => this.actions$
             .pipe(
-                ofType(homeAction.loadCoinById),
-                mergeMap(({ id }) =>
-                    this.coinService.getCoinById(id)),
+                ofType(homeAction.loadCoinByIdOrName),
+                mergeMap(({ param }) =>
+                    this.coinService.getCoinByIdOrName(param)),
                 catchError((err, caught$) => {
                     this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
                 }),
-                map((details: Coin) => homeAction.loadCoinByIdOrNameConcluded({ details })),
-            ),
-    );
-
-    loadCoinByName$ = createEffect(
-        () => this.actions$
-            .pipe(
-                ofType(homeAction.loadCoinByName),
-                mergeMap(({ name }) =>
-                    this.coinService.getCoinByName(name)),
-                catchError((err, caught$) => {
-                    this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
-                    return caught$;
-                }),
-                map((details: Coin) => homeAction.loadCoinByIdOrNameConcluded({ details })),
+                map((details: Coin) => homeAction.loadCoinAndQuoteByIdOrNameConcluded({ details })),
             ),
     );
 
@@ -87,7 +59,7 @@ export class CoinEffects{
                     this.store.dispatch(homeAction.loadFailed( { status: true, response: err } ));
                     return caught$;
                 }),
-                map((details: Coin) => homeAction.loadCoinByIdOrNameConcluded({ details })),
+                map((details: Coin) => homeAction.loadCoinAndQuoteByIdOrNameConcluded({ details })),
             ),
     );
 

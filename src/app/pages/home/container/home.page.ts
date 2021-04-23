@@ -27,11 +27,13 @@ export class HomePage implements OnInit {
 
   currency$: Observable<Currency> | undefined;
   locales$: Observable<Currency[]> | undefined;
+  range$: Observable<string> | undefined;
 
   loading$: Observable<boolean> | undefined;
   failed$!: Observable<any> | undefined;
 
   coinToDetail: Coin | undefined;
+  range: string | undefined;
 
   constructor(private store: Store, private dialog: MatDialog) {}
 
@@ -44,21 +46,25 @@ export class HomePage implements OnInit {
 
     this.currency$ = this.store.pipe(select(homeSelectors.selectCurrency));
     this.locales$ = this.store.pipe(select(homeSelectors.selectLocalesList));
+    this.range$ = this.store.pipe(select(homeSelectors.selectRange));
 
-    this.load('1', '5000');
-    setTimeout(() => this.store.dispatch(homeActions.loadLocales()), 1000);
+    this.store.dispatch(homeActions.loadLocales());
+    this.range$?.subscribe((range) => (this.range = range));
+
+    this.startApplication();
   }
 
-  load(...args: string[]): void {
-    this.currency$?.subscribe((currency) => {
+  startApplication(): void {
+    this.currency$?.subscribe((currency) =>
       this.store.dispatch(
         homeActions.loadListOfCoins({
-          start: args[0],
-          limit: args[1],
-          convert: currency.code,
+          param: {
+            limit: this.range,
+            convert: currency.code,
+          },
         })
-      );
-    });
+      )
+    );
   }
 
   details(id: string): void {
@@ -67,27 +73,27 @@ export class HomePage implements OnInit {
         .filter((coin) => coin.id.toString() === id)
         .pop();
     });
-    this.store.dispatch(homeActions.loadCoinById({ id }));
+    this.store.dispatch(homeActions.loadCoinByIdOrName({ param: { id } }));
 
-    if (this.dialogRef === undefined){
+    if (this.dialogRef === undefined) {
       this.details$?.subscribe((details) =>
         this.openDialog(DetailComponent, {
-          data: {
-            ...this.coinToDetail,
-            details,
-          },
+          data: { ...this.coinToDetail, details },
         })
       );
     }
   }
 
-  about(): void{
+  about(): void {
     this.openDialog(DialogAboutComponent, {});
   }
 
   newCurrency(id: string): void {
     this.store.dispatch(homeActions.changeCurrency({ id }));
-    setTimeout(() => this.load('1', '5000'), 1000);
+  }
+
+  newRange(range: string): void {
+    this.store.dispatch(homeActions.changeRangeOfCoins({ range }));
   }
 
   openDialog(component: any, data: any): void {

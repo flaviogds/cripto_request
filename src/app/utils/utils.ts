@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Currency } from '../entity/currency-entity';
 import { Coin, CoinList, Details } from '../entity/coins-entity';
 
-export function coinList(response: any, convert: string): CoinList{
+export function coinList(response: any, convert?: string): CoinList{
     return {
         status:
         {

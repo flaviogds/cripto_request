@@ -4,6 +4,8 @@
             <crip-form
                 [locales$]="locales$"
                 [currency$]="currency$"
+                [range$]="range$"
+                (newRange)="newRange($event)"
                 (newCurrency)="newCurrency($event)">
             </crip-form>
         </crip-navbar>
@@ -20,9 +22,7 @@
                     aria-label="SourceCode on GitHub"
                     href="https://github.com/flaviogds/cripto_request"
                     target="_blank">
-                    <mat-icon>
-                        <img src="src/assets/images/github-circle-white-transparent.svg" alt="GitHub" srcset="">
-                    </mat-icon>
+                    <img class="avatar" src="../../../../assets/images/github-circle-white.svg" alt="GitHub">
                 </a>
                 <a
                     mat-button

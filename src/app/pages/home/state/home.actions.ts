@@ -1,37 +1,28 @@
 import { createAction, props } from '@ngrx/store';
 
-export const loadListOfCoinsDefault =  createAction(
-    '[Home] Load List of Coins Default',
-);
-
 export const loadListOfCoins =  createAction(
     '[Home] Load List of Coins',
-    props<{start: string, limit: string, convert: string}>()
-);
-
-export const loadCoinById = createAction(
-    '[Home] Load Coin by Id',
-    props<{id: string}>()
-);
-
-export const loadCoinByName = createAction(
-    '[Home] Load Coin by Name',
-    props<{name: string}>()
-);
-
-export const loadQuoteById = createAction(
-    '[Home] Load Quote by Id',
-    props<{id: string}>()
+    props<{ param: any}>()
 );
 
 export const loadListOfCoinsConcluded = createAction(
     '[Coin Service] Requisition Concluded',
-    props<{response: any}>()
+    props<{ response: any }>()
 );
 
-export const loadCoinByIdOrNameConcluded = createAction(
+export const loadCoinByIdOrName = createAction(
+    '[Home] Load Coin by Id',
+    props<{ param: any }>()
+);
+
+export const loadQuoteById = createAction(
+    '[Home] Load Quote by Id',
+    props<{ id: string }>()
+);
+
+export const loadCoinAndQuoteByIdOrNameConcluded = createAction(
     '[Coin Service] Requisition By Id Or Name Concluded',
-    props<{details: any}>()
+    props<{ details: any }>()
 );
 
 export const loadLocales = createAction(
@@ -40,22 +31,27 @@ export const loadLocales = createAction(
 
 export const loadLocalesConcluded = createAction(
     '[Home] Load Locales Concluded',
-    props<{locales: any}>()
+    props<{ locales: any }>()
 );
 
 export const changeCurrency = createAction(
     '[Home] Change Currency',
-    props<{id: string}>()
+    props<{ id: string }>()
 );
 
 export const changeCurrencyConcluded = createAction(
     '[Home] Change Currency',
-    props<{currency: any}>()
+    props<{ currency: any }>()
+);
+
+export const changeRangeOfCoins = createAction(
+    '[Home] Load Number of Coins to View',
+    props<{ range: string }>()
 );
 
 export const loadFailed = createAction(
     'Requisition Failed',
-    props<{status: boolean, response: any}>()
+    props<{ status: boolean, response: any }>()
 );
 
 export const clearState = createAction(

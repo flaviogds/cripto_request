@@ -2,7 +2,7 @@ export interface CoinList {
   status: {
     timestamp: string;
     total_count: number;
-    currency: string;
+    currency: string | undefined;
   };
   data: Coin[];
 }

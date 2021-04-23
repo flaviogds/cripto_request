@@ -36,3 +36,8 @@ export const selectCurrency = createSelector(
     selectFeature,
     (state: StateModel) => state.currency,
 );
+
+export const selectRange = createSelector(
+    selectFeature,
+    (state: StateModel) => state.range,
+);
